@@ -1,6 +1,8 @@
-package com.example.movieapp
+package com.example.movieapp.repository
 
-import retrofit2.Call
+import com.example.movieapp.model.network.ApiService
+import com.example.movieapp.model.data.MovieResponse
+import com.example.movieapp.model.data.PopularMoviesResponse
 import retrofit2.Response
 
 class MovieRepository(private val apiService: ApiService) {

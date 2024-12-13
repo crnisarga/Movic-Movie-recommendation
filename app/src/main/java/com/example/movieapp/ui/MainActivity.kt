@@ -1,4 +1,4 @@
-package com.example.movieapp
+package com.example.movieapp.ui
 
 
 import android.os.Bundle
@@ -9,6 +9,12 @@ import androidx.appcompat.widget.SearchView
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.example.movieapp.model.network.ApiService
+import com.example.movieapp.repository.MovieRepository
+import com.example.movieapp.viewmodel.MovieViewModel
+import com.example.movieapp.viewmodel.MovieViewModelFactory
+import com.example.movieapp.R
+import com.example.movieapp.model.network.RetrofitClient
 
 class MainActivity : AppCompatActivity() {
 

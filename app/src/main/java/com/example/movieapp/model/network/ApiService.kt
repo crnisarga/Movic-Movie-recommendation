@@ -1,6 +1,7 @@
-package com.example.movieapp
+package com.example.movieapp.model.network
 
-import retrofit2.Call
+import com.example.movieapp.model.data.MovieResponse
+import com.example.movieapp.model.data.PopularMoviesResponse
 import retrofit2.Response
 import retrofit2.http.GET
 import retrofit2.http.Query

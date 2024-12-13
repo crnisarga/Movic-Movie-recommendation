@@ -1,10 +1,14 @@
-package com.example.movieapp
+package com.example.movieapp.viewmodel
 
 import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.movieapp.model.data.PopularMoviesResponse
+import com.example.movieapp.model.data.Movie
+import com.example.movieapp.model.data.MovieResponse
+import com.example.movieapp.repository.MovieRepository
 import kotlinx.coroutines.launch
 import retrofit2.Response
 

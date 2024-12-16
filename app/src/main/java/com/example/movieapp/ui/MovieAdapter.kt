@@ -1,5 +1,6 @@
 package com.example.movieapp.ui
 
+import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -11,6 +12,7 @@ import com.example.movieapp.R
 import com.example.movieapp.model.data.Movie
 
 class MovieAdapter(private val movieList: List<Movie>) : RecyclerView.Adapter<MovieAdapter.MovieViewHolder>() {
+
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MovieViewHolder {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.item_movie, parent, false)
@@ -33,6 +35,13 @@ class MovieAdapter(private val movieList: List<Movie>) : RecyclerView.Adapter<Mo
             .placeholder(R.drawable.ic_launcher_background)  // Placeholder while loading
             .error(R.drawable.ic_launcher_foreground)  // Error image if loading fails
             .into(holder.imgMoviePoster)
+
+        holder.itemView.setOnClickListener {
+            val intent = Intent(holder.itemView.context, MovieDetailActivity::class.java)
+            intent.putExtra("movie_id",movie.id)
+            holder.itemView.context.startActivity(intent)
+        }
+
     }
 
     class MovieViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {

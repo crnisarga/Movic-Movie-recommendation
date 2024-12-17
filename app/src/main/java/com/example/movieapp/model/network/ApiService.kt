@@ -1,7 +1,6 @@
 package com.example.movieapp.model.network
 
 import com.example.movieapp.model.data.Movie
-import com.example.movieapp.model.data.MovieDetails
 import com.example.movieapp.model.data.MovieResponse
 import com.example.movieapp.model.data.PopularMoviesResponse
 import retrofit2.Response

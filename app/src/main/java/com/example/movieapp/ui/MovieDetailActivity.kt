@@ -1,17 +1,11 @@
 package com.example.movieapp.ui
 
-import android.content.Intent
-import android.media.Image
 import android.os.Bundle
 import android.util.Log
 import android.widget.ImageView
 import android.widget.TextView
-import androidx.activity.enableEdgeToEdge
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
-import androidx.lifecycle.ViewModel
 import com.bumptech.glide.Glide
 import com.example.movieapp.R
 import com.example.movieapp.model.data.Movie

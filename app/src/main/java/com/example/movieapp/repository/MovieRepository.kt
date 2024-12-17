@@ -1,7 +1,6 @@
 package com.example.movieapp.repository
 
 import com.example.movieapp.model.data.Movie
-import com.example.movieapp.model.data.MovieDetails
 import com.example.movieapp.model.network.ApiService
 import com.example.movieapp.model.data.MovieResponse
 import com.example.movieapp.model.data.PopularMoviesResponse

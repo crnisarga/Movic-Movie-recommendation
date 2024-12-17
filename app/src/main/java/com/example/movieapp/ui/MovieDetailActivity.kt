@@ -51,8 +51,6 @@ class MovieDetailActivity : AppCompatActivity() {
             Log.d("ncr","the value fetched id ${movie.title} ${movie.overview}")
         })
     }
-
-
     private fun updateUI(movie: Movie) {
         movieTitle.text = movie.title
         movieDescription.text = movie.overview

@@ -12,6 +12,9 @@ class MovieViewModelFactory(private val movieRepository: MovieRepository) : View
         else if (modelClass.isAssignableFrom(MovieDetailsViewModel::class.java)) {
             MovieDetailsViewModel(movieRepository) as T
         }
+        else if (modelClass.isAssignableFrom(GenreViewModel::class.java)) {
+            GenreViewModel(movieRepository) as T
+        }
         else {
             throw IllegalArgumentException("Unknown ViewModel class")
         }

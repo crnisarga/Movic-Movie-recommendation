@@ -1,5 +1,6 @@
 package com.example.movieapp.model.network
 
+import com.example.movieapp.model.data.GenreResponse
 import com.example.movieapp.model.data.Movie
 import com.example.movieapp.model.data.MovieResponse
 import com.example.movieapp.model.data.PopularMoviesResponse
@@ -19,4 +20,6 @@ interface ApiService {
     @GET("movie/{movie_id}")
     suspend fun getMovieDetail(@Path("movie_id") movieId: Int, @Query("api_key") apiKey: String): Movie
 
+    @GET("genre/movie/list")
+    suspend fun getGenres(@Query("api_key") apiKey: String): Response<GenreResponse>
 }

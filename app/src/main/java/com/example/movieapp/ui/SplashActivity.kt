@@ -21,7 +21,7 @@ class SplashActivity : AppCompatActivity() {
 
         Handler().postDelayed({
             // After delay, start MainActivity
-            val intent = Intent(this, MainActivity::class.java)
+            val intent = Intent(this, MovieGenreActivity::class.java)
             startActivity(intent)
             finish()  // Finish SplashActivity so the user can't go back to it
         }, 3000)

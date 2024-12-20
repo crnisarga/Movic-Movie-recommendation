@@ -1,5 +1,6 @@
 package com.example.movieapp.repository
 
+import com.example.movieapp.model.data.GenreResponse
 import com.example.movieapp.model.data.Movie
 import com.example.movieapp.model.network.ApiService
 import com.example.movieapp.model.data.MovieResponse
@@ -18,5 +19,9 @@ class MovieRepository(private val apiService: ApiService) {
 
     suspend fun getMovieDetail(movieId: Int, apiKey: String):  Movie {
         return apiService.getMovieDetail(movieId, apiKey)
+    }
+
+    suspend fun getGenres(apiKey: String): Response<GenreResponse> {
+        return apiService.getGenres(apiKey)
     }
 }

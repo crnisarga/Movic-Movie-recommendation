@@ -53,10 +53,10 @@ class MovieDetailActivity : AppCompatActivity() {
         val imageUrl = "https://image.tmdb.org/t/p/w500${movie.poster_path}"
 
         Glide.with(this)
-            .load(imageUrl) // URL or resource to load
-            .placeholder(R.drawable.ic_launcher_background) // Optional: A placeholder while the image loads
-            .error(R.drawable.ic_launcher_foreground) // Optional: An image if the loading fails
-            .into(movieImage) // Bind it to the ImageView
+            .load(imageUrl)
+            .placeholder(R.drawable.ic_launcher_background)
+            .error(R.drawable.ic_launcher_foreground)
+            .into(movieImage)
 
     }
 }

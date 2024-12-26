@@ -28,6 +28,7 @@ class MovieViewModel (private val repository: MovieRepository) : ViewModel(){
             try {
                 val response: Response<PopularMoviesResponse> = repository.getPopularMovies(genreId, apiKey)
                 if (response.isSuccessful) {
+                    Log.d("ncr","the http link is ${response}")
                     _popularMovies.value = response.body()?.results ?: emptyList()
                 } else {
                     _errorMessage.value = "Failed to fetch popular movies"

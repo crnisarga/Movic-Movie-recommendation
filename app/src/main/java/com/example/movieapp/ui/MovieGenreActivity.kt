@@ -1,6 +1,7 @@
 package com.example.movieapp.ui
 
 import android.os.Bundle
+import android.util.Log
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
@@ -31,8 +32,8 @@ class MovieGenreActivity : AppCompatActivity() {
         recyclerView = findViewById(R.id.genres_recyclerview)
         recyclerView.layoutManager = LinearLayoutManager(this)
 
-        genreViewModel.genre.observe(this, Observer { genre ->
-            genreAdapter = GenreAdapter(genre)
+        genreViewModel.genres.observe(this, Observer { genres ->
+            genreAdapter = GenreAdapter(genres)
             recyclerView.adapter = genreAdapter
         })
 

@@ -24,7 +24,6 @@ class GenreAdapter(private val genreList: List<Genre>) :  RecyclerView.Adapter<G
         val genre = genreList[position]
 
         holder.genre_name.text = genre.name
-        Log.d("ncr","the genre name is ${genre.name}")
     }
 
     class GenreViewHolder (itemView: View) : RecyclerView.ViewHolder(itemView) {

@@ -1,5 +1,6 @@
 package com.example.movieapp.ui
 
+import android.content.Intent
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -24,6 +25,12 @@ class GenreAdapter(private val genreList: List<Genre>) :  RecyclerView.Adapter<G
         val genre = genreList[position]
 
         holder.genre_name.text = genre.name
+
+        holder.itemView.setOnClickListener {
+            val intent = Intent(holder.itemView.context, MainActivity::class.java)
+            intent.putExtra("genre_id",genre.id)
+            holder.itemView.context.startActivity(intent)
+        }
     }
 
     class GenreViewHolder (itemView: View) : RecyclerView.ViewHolder(itemView) {

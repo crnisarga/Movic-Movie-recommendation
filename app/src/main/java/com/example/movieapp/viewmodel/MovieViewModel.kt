@@ -23,10 +23,10 @@ class MovieViewModel (private val repository: MovieRepository) : ViewModel(){
     private val _errorMessage = MutableLiveData<String>()
     val errorMessage: LiveData<String> = _errorMessage
 
-    fun fetchPopularMovies(apiKey: String) {
+    fun fetchPopularMovies(genreId: Int, apiKey: String) {
         viewModelScope.launch {
             try {
-                val response: Response<PopularMoviesResponse> = repository.getPopularMovies(apiKey)
+                val response: Response<PopularMoviesResponse> = repository.getPopularMovies(genreId, apiKey)
                 if (response.isSuccessful) {
                     _popularMovies.value = response.body()?.results ?: emptyList()
                 } else {

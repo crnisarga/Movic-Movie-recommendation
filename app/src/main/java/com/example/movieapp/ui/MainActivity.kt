@@ -36,6 +36,7 @@ class MainActivity : AppCompatActivity() {
 
         searchView = findViewById(R.id.searchView)
 
+        val genreId = intent.getIntExtra("genre_id",0)
 
         movieViewModel.popularMovies.observe(this, Observer { movies ->
             movieAdapter = MovieAdapter(movies)
@@ -68,6 +69,6 @@ class MainActivity : AppCompatActivity() {
             }
         })
 
-        movieViewModel.fetchPopularMovies(apiKey)
+        movieViewModel.fetchPopularMovies(genreId,apiKey)
     }
 }

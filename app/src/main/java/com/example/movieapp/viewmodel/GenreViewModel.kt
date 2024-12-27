@@ -21,6 +21,8 @@ class GenreViewModel (private val repository: MovieRepository) : ViewModel() {
     private val _errorMessage = MutableLiveData<String>()
     val errorMessage: LiveData<String> get() = _errorMessage
 
+
+
      fun fetchGenres(apiKey: String) {
         viewModelScope.launch(Dispatchers.IO) {
             try {

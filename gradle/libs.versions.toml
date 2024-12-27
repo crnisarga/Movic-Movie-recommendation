@@ -25,6 +25,8 @@ picasso = "2.71828"
 ktorClientJson = "3.0.3"
 ktorClientSerialization = "3.0.3"
 kotlinxSerializationJson = "1.8.0-RC"
+roomRuntime = "2.7.0-alpha12"
+roomCompiler = "2.7.0-alpha12"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
@@ -49,6 +51,8 @@ picasso = { group = "com.squareup.picasso", name = "picasso", version.ref = "pic
 ktor-client-json = { group = "io.ktor", name = "ktor-client-json", version.ref = "ktorClientJson" }
 ktor-client-serialization = { group = "io.ktor", name = "ktor-client-serialization", version.ref = "ktorClientSerialization" }
 kotlinx-serialization-json = { group = "org.jetbrains.kotlinx", name = "kotlinx-serialization-json", version.ref = "kotlinxSerializationJson" }
+androidx-room-runtime = { group = "androidx.room", name = "room-runtime", version.ref = "roomRuntime" }
+androidx-room-compiler = { group = "androidx.room", name = "room-compiler", version.ref = "roomCompiler" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }

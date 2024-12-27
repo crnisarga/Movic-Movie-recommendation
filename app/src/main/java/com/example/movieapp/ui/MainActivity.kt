@@ -1,7 +1,9 @@
 package com.example.movieapp.ui
 
 
+import android.content.Context
 import android.os.Bundle
+import android.view.inputmethod.InputMethodManager
 import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
@@ -61,6 +63,8 @@ class MainActivity : AppCompatActivity() {
                 query?.let {
                     movieViewModel.searchMovies(it, apiKey)
                 }
+
+                hideKeyboard()
                 return true
             }
 
@@ -70,5 +74,13 @@ class MainActivity : AppCompatActivity() {
         })
 
         movieViewModel.fetchPopularMovies(genreId,apiKey)
+    }
+
+    private fun hideKeyboard() {
+        val inputMethodManager = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+        val currentFocusView = currentFocus
+        currentFocusView?.let {
+            inputMethodManager.hideSoftInputFromWindow(it.windowToken, 0)
+        }
     }
 }

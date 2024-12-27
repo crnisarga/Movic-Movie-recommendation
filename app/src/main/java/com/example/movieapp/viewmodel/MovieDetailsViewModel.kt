@@ -6,6 +6,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.movieapp.model.data.Movie
 import com.example.movieapp.repository.MovieRepository
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
 class MovieDetailsViewModel (private val repository: MovieRepository) : ViewModel() {
@@ -17,7 +18,7 @@ class MovieDetailsViewModel (private val repository: MovieRepository) : ViewMode
     val errorMessage: LiveData<String> = _errorMessage
 
     fun getMovieDetail(movieId: Int,  apiKey: String): LiveData<Movie> {
-        viewModelScope.launch {
+        viewModelScope.launch(Dispatchers.IO)  {
             val movie = repository.getMovieDetail(movieId,apiKey)
             _movieDetail.postValue(movie)
         }

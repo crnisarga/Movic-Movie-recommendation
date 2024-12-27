@@ -9,7 +9,9 @@ import com.example.movieapp.model.data.PopularMoviesResponse
 import com.example.movieapp.model.data.Movie
 import com.example.movieapp.model.data.MovieResponse
 import com.example.movieapp.repository.MovieRepository
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import retrofit2.Response
 
 class MovieViewModel (private val repository: MovieRepository) : ViewModel(){
@@ -24,33 +26,43 @@ class MovieViewModel (private val repository: MovieRepository) : ViewModel(){
     val errorMessage: LiveData<String> = _errorMessage
 
     fun fetchPopularMovies(genreId: Int, apiKey: String) {
-        viewModelScope.launch {
+        viewModelScope.launch(Dispatchers.IO) {
             try {
                 val response: Response<PopularMoviesResponse> = repository.getPopularMovies(genreId, apiKey)
                 if (response.isSuccessful) {
-                    Log.d("ncr","the http link is ${response}")
-                    _popularMovies.value = response.body()?.results ?: emptyList()
+                    withContext(Dispatchers.Main) {
+                        _popularMovies.value = response.body()?.results ?: emptyList()
+                    }
                 } else {
+                    withContext(Dispatchers.Main) {
                     _errorMessage.value = "Failed to fetch popular movies"
+                        }
                 }
             } catch (e: Exception) {
-                _errorMessage.value = "Network error: ${e.message}"
-                Log.d("ncr","${e.message}")
+                withContext(Dispatchers.Main) {
+                    _errorMessage.value = "Network error: ${e.message}"
+                }
             }
         }
     }
 
     fun searchMovies(query: String, apiKey: String) {
-        viewModelScope.launch {
+        viewModelScope.launch(Dispatchers.IO) {
             try {
                 val response: Response<MovieResponse> = repository.searchMovies(query, apiKey)
                 if (response.isSuccessful) {
-                    _searchResults.value = response.body()?.results ?: emptyList()
+                    withContext(Dispatchers.Main) {
+                        _searchResults.value = response.body()?.results ?: emptyList()
+                    }
                 } else {
-                    _errorMessage.value = "Error fetching search results"
+                    withContext(Dispatchers.Main) {
+                        _errorMessage.value = "Error fetching search results"
+                    }
                 }
             } catch (e: Exception) {
-                _errorMessage.value = "Network error: ${e.message}"
+                withContext(Dispatchers.Main) {
+                    _errorMessage.value = "Network error: ${e.message}"
+                }
             }
         }
     }

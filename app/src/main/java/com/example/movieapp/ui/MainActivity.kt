@@ -17,6 +17,11 @@ import com.example.movieapp.viewmodel.MovieViewModel
 import com.example.movieapp.viewmodel.MovieViewModelFactory
 import com.example.movieapp.R
 import com.example.movieapp.model.network.RetrofitClient
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 
 class MainActivity : AppCompatActivity() {
 
@@ -38,17 +43,18 @@ class MainActivity : AppCompatActivity() {
 
         searchView = findViewById(R.id.searchView)
 
+        movieAdapter = MovieAdapter()
+        recyclerView.adapter = movieAdapter
+
         val genreId = intent.getIntExtra("genre_id",0)
 
         movieViewModel.popularMovies.observe(this, Observer { movies ->
-            movieAdapter = MovieAdapter(movies)
-            recyclerView.adapter = movieAdapter
+            movieAdapter.submitList(movies)
         })
 
         movieViewModel.searchResults.observe(this, Observer { searchResults ->
             if (searchResults.isNotEmpty()) {
-                movieAdapter = MovieAdapter(searchResults)
-                recyclerView.adapter = movieAdapter
+                movieAdapter.submitList(searchResults)
             } else {
                 Toast.makeText(this, "No movies found", Toast.LENGTH_SHORT).show()
             }
@@ -59,6 +65,9 @@ class MainActivity : AppCompatActivity() {
         })
 
         searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+            private val debounceJob = Job()
+            private val scope = CoroutineScope(Dispatchers.Main + debounceJob)
+
             override fun onQueryTextSubmit(query: String?): Boolean {
                 query?.let {
                     movieViewModel.searchMovies(it, apiKey)
@@ -69,6 +78,12 @@ class MainActivity : AppCompatActivity() {
             }
 
             override fun onQueryTextChange(newText: String?): Boolean {
+                scope.launch {
+                    delay(500)  // Wait for 500ms before searching
+                    newText?.let {
+                        movieViewModel.searchMovies(it, apiKey)
+                    }
+                }
                 return true
             }
         })

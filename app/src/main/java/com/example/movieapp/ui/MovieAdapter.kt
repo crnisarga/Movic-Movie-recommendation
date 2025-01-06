@@ -6,12 +6,15 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.recyclerview.widget.DiffUtil
+import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.example.movieapp.R
 import com.example.movieapp.model.data.Movie
 
-class MovieAdapter(private val movieList: List<Movie>) : RecyclerView.Adapter<MovieAdapter.MovieViewHolder>() {
+class MovieAdapter : ListAdapter<Movie, MovieAdapter.MovieViewHolder>(MovieDiffCallback()) {
 
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MovieViewHolder {
@@ -19,12 +22,9 @@ class MovieAdapter(private val movieList: List<Movie>) : RecyclerView.Adapter<Mo
         return MovieViewHolder(view)
     }
 
-    override fun getItemCount(): Int {
-        return movieList.size
-    }
 
     override fun onBindViewHolder(holder: MovieViewHolder, position: Int) {
-        val movie = movieList[position]
+        val movie = getItem(position)
 
         holder.tvMovieTitle.text = movie.title
         holder.tvMovieRating.text = "Rating: ${movie.vote_average}"
@@ -34,11 +34,12 @@ class MovieAdapter(private val movieList: List<Movie>) : RecyclerView.Adapter<Mo
             .load(imageUrl)
             .placeholder(R.drawable.ic_launcher_background)  // Placeholder while loading
             .error(R.drawable.ic_launcher_foreground)  // Error image if loading fails
+            .diskCacheStrategy(DiskCacheStrategy.ALL)
             .into(holder.imgMoviePoster)
 
         holder.itemView.setOnClickListener {
             val intent = Intent(holder.itemView.context, MovieDetailActivity::class.java)
-            intent.putExtra("movie_id",movie.id)
+            intent.putExtra("movie_id", movie.id)
             holder.itemView.context.startActivity(intent)
         }
 
@@ -50,4 +51,14 @@ class MovieAdapter(private val movieList: List<Movie>) : RecyclerView.Adapter<Mo
         val imgMoviePoster: ImageView = itemView.findViewById(R.id.imgMoviePoster)
     }
 
+    class MovieDiffCallback : DiffUtil.ItemCallback<Movie>() {
+        override fun areItemsTheSame(oldItem: Movie, newItem: Movie): Boolean {
+            return oldItem.id == newItem.id // Ensure the movie IDs match
+        }
+
+        override fun areContentsTheSame(oldItem: Movie, newItem: Movie): Boolean {
+            return oldItem == newItem // Compare entire contents of the items
+        }
+
+    }
 }

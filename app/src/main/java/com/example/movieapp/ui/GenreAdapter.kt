@@ -5,23 +5,22 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import androidx.recyclerview.widget.DiffUtil
+import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.example.movieapp.R
 import com.example.movieapp.model.data.Genre
 
-class GenreAdapter(private val genreList: List<Genre>) :  RecyclerView.Adapter<GenreAdapter.GenreViewHolder>() {
+class GenreAdapter :  ListAdapter<Genre, GenreAdapter.GenreViewHolder>(GenreDiffCallback()) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): GenreViewHolder {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.item_genre, parent, false)
         return GenreViewHolder(view)
     }
 
-    override fun getItemCount(): Int {
-        return genreList.size
-    }
 
     override fun onBindViewHolder(holder: GenreViewHolder, position: Int) {
-        val genre = genreList[position]
+        val genre = getItem(position)
 
         holder.genre_name.text = genre.name
 
@@ -35,4 +34,17 @@ class GenreAdapter(private val genreList: List<Genre>) :  RecyclerView.Adapter<G
     class GenreViewHolder (itemView: View) : RecyclerView.ViewHolder(itemView) {
         val genre_name: TextView = itemView.findViewById(R.id.genre_name)
     }
+
+    class GenreDiffCallback : DiffUtil.ItemCallback<Genre>() {
+        override fun areItemsTheSame(oldItem: Genre, newItem: Genre): Boolean {
+            return oldItem.id == newItem.id // Ensure genre IDs match
+        }
+
+        override fun areContentsTheSame(oldItem: Genre, newItem: Genre): Boolean {
+            return oldItem == newItem // Compare the entire contents of the items
+        }
+    }
 }
+
+
+

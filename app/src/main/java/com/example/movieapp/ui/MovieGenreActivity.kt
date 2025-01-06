@@ -2,6 +2,7 @@ package com.example.movieapp.ui
 
 import android.os.Bundle
 import android.util.Log
+import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
@@ -32,9 +33,15 @@ class MovieGenreActivity : AppCompatActivity() {
         recyclerView = findViewById(R.id.genres_recyclerview)
         recyclerView.layoutManager = LinearLayoutManager(this)
 
+        genreAdapter = GenreAdapter()
+        recyclerView.adapter = genreAdapter
+
         genreViewModel.genres.observe(this, Observer { genres ->
-            genreAdapter = GenreAdapter(genres)
-            recyclerView.adapter = genreAdapter
+            if (genres.isEmpty()) {
+                Toast.makeText(this, "No genres available", Toast.LENGTH_SHORT).show()
+            } else {
+                genreAdapter.submitList(genres) // Submit the list to update the adapter
+            }
         })
 
         genreViewModel.fetchGenres(apiKey)

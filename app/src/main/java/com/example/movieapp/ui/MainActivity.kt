@@ -3,7 +3,10 @@ package com.example.movieapp.ui
 
 import android.content.Context
 import android.os.Bundle
+import android.view.View
 import android.view.inputmethod.InputMethodManager
+import android.widget.FrameLayout
+import com.example.movieapp.ui.NoMoviesFoundFragment
 import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
@@ -20,8 +23,6 @@ import com.example.movieapp.model.network.RetrofitClient
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
-import kotlinx.coroutines.delay
-import kotlinx.coroutines.launch
 
 class MainActivity : AppCompatActivity() {
 
@@ -29,6 +30,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var recyclerView: RecyclerView
     private lateinit var movieAdapter: MovieAdapter
     private lateinit var searchView: SearchView
+    private lateinit var fragmentContainer: FrameLayout
 
     private val movieViewModel: MovieViewModel by viewModels {
         MovieViewModelFactory(MovieRepository(RetrofitClient.retrofit.create(ApiService::class.java)))
@@ -40,6 +42,8 @@ class MainActivity : AppCompatActivity() {
 
         recyclerView = findViewById(R.id.rvMovies)
         recyclerView.layoutManager = LinearLayoutManager(this)
+
+        fragmentContainer = findViewById(R.id.fragment_container)
 
         searchView = findViewById(R.id.searchView)
 
@@ -56,7 +60,7 @@ class MainActivity : AppCompatActivity() {
             if (searchResults.isNotEmpty()) {
                 movieAdapter.submitList(searchResults)
             } else {
-                Toast.makeText(this, "No movies found", Toast.LENGTH_SHORT).show()
+                showNoMoviesFoundFragment()
             }
         })
 
@@ -78,17 +82,21 @@ class MainActivity : AppCompatActivity() {
             }
 
             override fun onQueryTextChange(newText: String?): Boolean {
-                scope.launch {
-                    delay(500)  // Wait for 500ms before searching
-                    newText?.let {
-                        movieViewModel.searchMovies(it, apiKey)
-                    }
-                }
                 return true
             }
         })
 
         movieViewModel.fetchPopularMovies(genreId,apiKey)
+    }
+
+    private fun showNoMoviesFoundFragment() {
+        recyclerView.visibility = View.GONE
+        fragmentContainer.visibility = View.VISIBLE
+        val manager = supportFragmentManager
+        val transaction = manager.beginTransaction()
+        transaction.replace(R.id.fragment_container, NoMoviesFoundFragment(), "NoMoviesFoundFragment")
+        transaction.addToBackStack(null)
+        transaction.commit()
     }
 
     private fun hideKeyboard() {

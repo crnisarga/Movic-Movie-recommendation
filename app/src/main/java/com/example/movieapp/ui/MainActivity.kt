@@ -76,8 +76,7 @@ class MainActivity : AppCompatActivity() {
                 query?.let {
                     movieViewModel.searchMovies(it, apiKey)
                 }
-
-                hideKeyboard()
+                searchView.clearFocus()
                 return true
             }
 
@@ -95,15 +94,26 @@ class MainActivity : AppCompatActivity() {
         val manager = supportFragmentManager
         val transaction = manager.beginTransaction()
         transaction.replace(R.id.fragment_container, NoMoviesFoundFragment(), "NoMoviesFoundFragment")
-        transaction.addToBackStack(null)
         transaction.commit()
     }
 
-    private fun hideKeyboard() {
-        val inputMethodManager = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
-        val currentFocusView = currentFocus
-        currentFocusView?.let {
-            inputMethodManager.hideSoftInputFromWindow(it.windowToken, 0)
+
+    override fun onBackPressed() {
+
+        searchView.setQuery("", false)
+
+        // Collapse the SearchView (to its default state)
+        searchView.onActionViewCollapsed()
+        val fragment = supportFragmentManager.findFragmentByTag("NoMoviesFoundFragment")
+
+        if (fragment != null && fragment.isVisible) {
+            fragmentContainer.visibility = View.GONE
+            recyclerView.visibility = View.VISIBLE
+        }
+
+        else {
+            super.onBackPressed()
         }
     }
+
 }

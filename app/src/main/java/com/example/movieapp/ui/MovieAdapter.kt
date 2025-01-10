@@ -26,9 +26,6 @@ class MovieAdapter : ListAdapter<Movie, MovieAdapter.MovieViewHolder>(MovieDiffC
     override fun onBindViewHolder(holder: MovieViewHolder, position: Int) {
         val movie = getItem(position)
 
-        holder.tvMovieTitle.text = movie.title
-        holder.tvMovieRating.text = "Rating: ${movie.vote_average}"
-
         val imageUrl = "https://image.tmdb.org/t/p/w500${movie.poster_path}"
         Glide.with(holder.itemView.context)
             .load(imageUrl)
@@ -46,8 +43,6 @@ class MovieAdapter : ListAdapter<Movie, MovieAdapter.MovieViewHolder>(MovieDiffC
     }
 
     class MovieViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        val tvMovieTitle: TextView = itemView.findViewById(R.id.tvMovieTitle)
-        val tvMovieRating: TextView = itemView.findViewById(R.id.tvMovieRating)
         val imgMoviePoster: ImageView = itemView.findViewById(R.id.imgMoviePoster)
     }
 

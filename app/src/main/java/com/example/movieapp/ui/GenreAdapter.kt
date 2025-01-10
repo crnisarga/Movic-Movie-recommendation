@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.DiffUtil
+import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.example.movieapp.R
@@ -23,6 +24,7 @@ class GenreAdapter :  ListAdapter<Genre, GenreAdapter.GenreViewHolder>(GenreDiff
         val genre = getItem(position)
 
         holder.genre_name.text = genre.name
+        holder.bind(genre)
 
         holder.itemView.setOnClickListener {
             val intent = Intent(holder.itemView.context, MainActivity::class.java)
@@ -32,7 +34,16 @@ class GenreAdapter :  ListAdapter<Genre, GenreAdapter.GenreViewHolder>(GenreDiff
     }
 
     class GenreViewHolder (itemView: View) : RecyclerView.ViewHolder(itemView) {
-        val genre_name: TextView = itemView.findViewById(R.id.genre_name)
+        val genre_name: TextView = itemView.findViewById(R.id.genres_name)
+
+        private val moviesRecyclerView: RecyclerView = itemView.findViewById(R.id.rvMovies)
+
+        fun bind(genre: Genre) {
+            // Set up the nested RecyclerView for movies
+            val movieAdapter = MovieAdapter()
+            moviesRecyclerView.layoutManager = LinearLayoutManager(itemView.context)
+            moviesRecyclerView.adapter = movieAdapter
+        }
     }
 
     class GenreDiffCallback : DiffUtil.ItemCallback<Genre>() {

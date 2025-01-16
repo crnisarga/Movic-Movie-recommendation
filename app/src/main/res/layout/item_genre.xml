@@ -16,7 +16,7 @@
 
     <!-- RecyclerView to display movies in each genre -->
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rvMovies"
+        android:id="@+id/rvMoviess"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"/>
 </LinearLayout>

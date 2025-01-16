@@ -1,18 +1,14 @@
 package com.example.movieapp.ui
 
 
-import android.content.Context
 import android.os.Bundle
 import android.view.View
-import android.view.inputmethod.InputMethodManager
 import android.widget.FrameLayout
-import com.example.movieapp.ui.NoMoviesFoundFragment
 import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.SearchView
 import androidx.lifecycle.Observer
-import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.movieapp.model.network.ApiService
 import com.example.movieapp.repository.MovieRepository
@@ -20,9 +16,6 @@ import com.example.movieapp.viewmodel.MovieViewModel
 import com.example.movieapp.viewmodel.MovieViewModelFactory
 import com.example.movieapp.R
 import com.example.movieapp.model.network.RetrofitClient
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.Job
 
 class MainActivity : AppCompatActivity() {
 
@@ -40,21 +33,21 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        recyclerView = findViewById(R.id.rvMovies)
-        recyclerView.layoutManager = LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
+//        recyclerView = findViewById(R.id.rvMovies)
+//        recyclerView.layoutManager = LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
 
         fragmentContainer = findViewById(R.id.fragment_container)
 
         searchView = findViewById(R.id.searchView)
 
-        movieAdapter = MovieAdapter()
-        recyclerView.adapter = movieAdapter
+//        movieAdapter = MovieAdapter()
+//        recyclerView.adapter = movieAdapter
 
         val genreId = intent.getIntExtra("genre_id",0)
 
-        movieViewModel.popularMovies.observe(this, Observer { movies ->
-            movieAdapter.submitList(movies)
-        })
+//        movieViewModel.popularMovies.observe(this, Observer { movies ->
+//            movieAdapter.submitList(movies)
+//        })
 
         movieViewModel.searchResults.observe(this, Observer { searchResults ->
             if (searchResults.isNotEmpty()) {
@@ -69,9 +62,6 @@ class MainActivity : AppCompatActivity() {
         })
 
         searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
-            private val debounceJob = Job()
-            private val scope = CoroutineScope(Dispatchers.Main + debounceJob)
-
             override fun onQueryTextSubmit(query: String?): Boolean {
                 query?.let {
                     movieViewModel.searchMovies(it, apiKey)
@@ -85,7 +75,7 @@ class MainActivity : AppCompatActivity() {
             }
         })
 
-        movieViewModel.fetchPopularMovies(genreId,apiKey)
+//        movieViewModel.fetchPopularMovies(genreId,apiKey)
     }
 
     private fun showNoMoviesFoundFragment() {
